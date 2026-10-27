@@ -3,17 +3,21 @@ package com.andres.Sistema_Gestion_Notas.entity;
 import com.andres.Sistema_Gestion_Notas.enums.EstadoRegistro;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "profesor")
+@SQLDelete(sql = "UPDATE profesor SET eliminado = true WHERE id = ?")
+@SQLRestriction("eliminado = false")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Profesor {
+public class Profesor extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

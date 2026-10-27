@@ -17,7 +17,7 @@ public class NotaController {
 
     private final NotaService notaService;
 
-    @GetMapping("matricula/matriculaId")
+    @GetMapping("matricula/{matriculaId}")
     public List<NotaResponse> listarPorMatricula(@PathVariable Long matriculaId){
         return notaService.listarPorMatricula(matriculaId);
     }

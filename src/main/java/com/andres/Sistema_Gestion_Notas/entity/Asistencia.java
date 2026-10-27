@@ -3,18 +3,22 @@ package com.andres.Sistema_Gestion_Notas.entity;
 import com.andres.Sistema_Gestion_Notas.enums.EstadoAsistencia;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "asistencia")
+@SQLDelete(sql = "UPDATE asistencia SET eliminado = true WHERE id = ?")
+@SQLRestriction("eliminado=false")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Asistencia {
+public class Asistencia extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

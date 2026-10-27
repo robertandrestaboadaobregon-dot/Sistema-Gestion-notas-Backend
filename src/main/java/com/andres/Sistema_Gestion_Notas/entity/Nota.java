@@ -3,6 +3,8 @@ package com.andres.Sistema_Gestion_Notas.entity;
 import com.andres.Sistema_Gestion_Notas.enums.TipoEvaluacion;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,12 +12,14 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "nota")
+@SQLDelete(sql = "UPDATE nota SET eliminado = true WHERE id = ?")
+@SQLRestriction("eliminado = false")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Nota {
+public class Nota extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +44,7 @@ public class Nota {
     @Builder.Default
     private LocalDate fecha = LocalDate.now();
 
-    @Column(length = 20)
+    @Column(length = 100)
     private String observacion;
 
     @Column(name = "creado_en", updatable = false)
